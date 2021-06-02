@@ -1,0 +1,66 @@
+Table guilds as G {
+  id bigint [pk]
+  prefix varchar(32)
+  join_role bigint
+  join_channel bigint
+  join_message varchar(2000)
+  leave_channel bigint
+  leave_message varchar(2000)
+  mod_log bigint 
+  mute_role bigint
+  mute_permission varchar(32)
+}
+
+Table custom_commands as CC {
+  guild bigint [pk, ref: > G.id]
+  name varchar(32) [pk]
+  description varchar(128)
+  type varchar(32)
+  permission varchar(32)
+  syntax varchar(32)
+  value varchar(2000)
+}
+
+Table disabled_commands as DC {
+  id int [pk, increment]
+  guild bigint [ref: > G.id]
+  name varchar(32)
+}
+
+Table filter_settings as FS {
+  guild bigint [pk, ref: - G.id]
+  enabled boolean
+  regex boolean
+  silent boolean
+  private boolean
+  message varchar(2000)
+}
+
+Table filter_rules as FR {
+  id int [pk, increment]
+  guild bigint [ref: > G.id]
+  rule varchar (1024)
+}
+
+Table filter_bypasses as FB {
+  id int [pk, increment]
+  guild bigint [ref: > G.id]
+  bypass varchar (32)
+}
+
+Table punishments as P {
+  guild bigint [pk, ref: > G.id]
+  case serial [pk]
+  staff_id bigint
+  staff_name varchar(40)
+  target_id bigint
+  target_name varchar(40)
+  expiration bigint
+  revoked boolean
+  reason varchar(516)
+}
+
+Table stats as S {
+  key varchar(32)
+  value int
+}
