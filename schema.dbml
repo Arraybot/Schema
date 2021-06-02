@@ -1,3 +1,6 @@
+//// -- LEVEL 1
+//// -- Tables and References
+
 Table guilds as G {
   id bigint [pk]
   prefix varchar(32)
@@ -9,6 +12,18 @@ Table guilds as G {
   mod_log bigint 
   mute_role bigint
   mute_permission varchar(32)
+}
+
+Table announcement_settings as AS {
+  guild bigint [pk, ref: - G.id]
+  enabled boolean
+  schedule varchar(128)
+}
+
+Table announcement_posts as AP {
+  id int [pk, increment]
+  guild bigint [ref: > G.id]
+  post varchar(2000)
 }
 
 Table custom_commands as CC {
