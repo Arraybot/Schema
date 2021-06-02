@@ -1,6 +1,3 @@
-//// -- LEVEL 1
-//// -- Tables and References
-
 Table guilds as G {
   id bigint [pk]
   prefix varchar(32)
@@ -76,6 +73,6 @@ Table punishments as P {
 }
 
 Table stats as S {
-  key varchar(32)
+  key varchar(32) [pk]
   value int
 }
